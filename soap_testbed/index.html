@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Web Services TestBed</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js" 
+                type="text/javascript"></script>
+        <script type="text/javascript">
+dojo.addOnLoad(function () {
+    dojo.connect(dojo.byId("test"), "onclick", null, function() {
+        try {
+        if (window.XMLHttpRequest) {
+            httpRequest = new XMLHttpRequest();
+        } else if (window.ActiveXObject) { 
+            httpRequest = new ActiveXObject("Microsoft.XMLHTTP"); 
+        }
+        httpRequest.open("POST", dojo.attr(dojo.byId("ws_url"), "value"), true);
+        if (httpRequest.overrideMimeType) { 
+            httpRequest.overrideMimeType("text/xml"); 
+        }
+        httpRequest.onreadystatechange = function () { if (httpRequest.readyState == 4) { dojo.byId("ws_response").innerHTML = httpRequest.responseText; } };
+        httpRequest.setRequestHeader("MessageType", "CALL");
+        httpRequest.setRequestHeader("Content-Type", "text/xml");
+
+        httpRequest.send(dojo.attr(dojo.byId("ws_request"));
+        } catch (err) {
+            dojo.byId("ws_response").innerHTML = err;
+        }
+    });
+});
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td colspan='3'>Web Service URL:<input type='text' id='ws_url' value='http://server.example.test' size='120'></td>
+            </tr><tr>
+                <td>Login:<input type='text' id='login' value='john'></td>
+                <td>Password:<input type='password' id='password' value='changeme'></td>
+                <td>Domain:<input type='text' id='domain' value='test'></td>
+            </tr>
+        </table>
+        <table>
+            <tr><td>Request:<br><textarea id='ws_request' cols='80' rows='25'>
+                        <?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><soapenv:Header></soapenv:Header><soapenv:Body></soapenv:Body></soapenv:Envelope>
+</textarea></td><td>Response:<br><textarea id='ws_response' cols='80' rows='25'></textarea></td></tr>
+        </table>
+        <input type='button' value='Test !' id='test' name='test'>
+    </body>
+</html>
