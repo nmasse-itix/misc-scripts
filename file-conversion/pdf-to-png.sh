@@ -1,0 +1,1 @@
+gs -sDEVICE=pngalpha -o pdf/file-%03d.png -sDEVICE=pngalpha -dDEVICEWIDTHPOINTS=5184 -dDEVICEHEIGHTPOINTS=3456  -r460.8 -dNOINTERPOLATE carte.pdf
